@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCFExcercise.Migrations
 {
     [DbContext(typeof(EFCFExcerciseContext))]
-    [Migration("20231002221212_InitialCreate")]
+    [Migration("20231004073759_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -46,7 +46,35 @@ namespace EFCFExcercise.Migrations
 
                     b.HasKey("StaffId");
 
+                    b.HasIndex("TitleId");
+
                     b.ToTable("Staff");
+                });
+
+            modelBuilder.Entity("EFCFExcercise.Models.Title", b =>
+                {
+                    b.Property<int>("TitleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TitleId"));
+
+                    b.Property<string>("TitleDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TitleId");
+
+                    b.ToTable("Title");
+                });
+
+            modelBuilder.Entity("EFCFExcercise.Models.Staff", b =>
+                {
+                    b.HasOne("EFCFExcercise.Models.Title", "Title")
+                        .WithMany()
+                        .HasForeignKey("TitleId");
+
+                    b.Navigation("Title");
                 });
 #pragma warning restore 612, 618
         }

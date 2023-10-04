@@ -43,6 +43,8 @@ namespace EFCFExcercise.Migrations
 
                     b.HasKey("StaffId");
 
+                    b.HasIndex("TitleId");
+
                     b.ToTable("Staff");
                 });
 
@@ -61,6 +63,15 @@ namespace EFCFExcercise.Migrations
                     b.HasKey("TitleId");
 
                     b.ToTable("Title");
+                });
+
+            modelBuilder.Entity("EFCFExcercise.Models.Staff", b =>
+                {
+                    b.HasOne("EFCFExcercise.Models.Title", "Title")
+                        .WithMany()
+                        .HasForeignKey("TitleId");
+
+                    b.Navigation("Title");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,6 +13,12 @@ namespace EFCFExcercise.Core.Repositories
         {
         }
 
+        public override async Task<IEnumerable<Staff>> GetAllAsync()
+        {
+            IEnumerable<Staff> result = await _dbSet.Include(s => s.Title).ToListAsync();
+            return result;
+        }
+
         public async Task<bool> AddAsync(StaffDto staffDto)
         {
             Staff newStaff = StaffMapper.MapToStaff(staffDto);
