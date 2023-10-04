@@ -8,6 +8,7 @@ namespace EFCFExcercise.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StaffId { get; set; }
         public int? TitleId { get; set; }
+        public virtual Title? Title { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

@@ -11,6 +11,19 @@ namespace EFCFExcercise.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Title",
+                columns: table => new
+                {
+                    TitleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TitleDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Title", x => x.TitleId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Staff",
                 columns: table => new
                 {
@@ -23,7 +36,17 @@ namespace EFCFExcercise.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Staff", x => x.StaffId);
+                    table.ForeignKey(
+                        name: "FK_Staff_Title_TitleId",
+                        column: x => x.TitleId,
+                        principalTable: "Title",
+                        principalColumn: "TitleId");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Staff_TitleId",
+                table: "Staff",
+                column: "TitleId");
         }
 
         /// <inheritdoc />
@@ -31,6 +54,9 @@ namespace EFCFExcercise.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Staff");
+
+            migrationBuilder.DropTable(
+                name: "Title");
         }
     }
 }
